@@ -1,0 +1,228 @@
+{% extends "../base.html" %} {% block content %}
+<div class="starter-template">
+	{% if msg %}
+	<div class="alert alert-danger" role="alert">{{msg}}</div>
+	{% endif %}
+	<h3><translate>编辑配置</translate></h3>
+	<form action="" method="post" class="edit-page" id="setup">
+		<div class="row flex-row">
+			<div class="col-md-6">
+				<label for="Title" translate>配置名称</label>
+				<input class="form-control" value="{{profile.Title}}" name="Title" id="Title" required>
+				<br>
+			</div>
+			<div class="col-md-3">
+				<label><translate>用户模式</translate></label>
+				<select class="form-control" id="SetupMode">
+					<option value="0" {% if config.SetupMode==0 %}selected{% endif %} translate>专家模式</option>
+					<option value="1" {% if config.SetupMode==1 %}selected{% endif %} translate>标准模式</option>
+				</select>				
+				<br>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="ResinPrice">
+					<span translate>树脂价格</span>
+					<span class="label label-default" translate>元/升</span>
+				</label>
+				<input class="form-control" value="{{profile.ResinPrice}}" name="ResinPrice" id="ResinPrice" step="0.01" type="number">
+			</div>			
+			<div class="col-md-12 conditional" data-condition="#SetupMode == 0">
+				<label for="Desc" translate>描述</label>
+				<textarea class="form-control" name="Desc" id="Desc">{{profile.Desc}}</textarea>
+			</div>
+		</div>
+		<br>
+
+		<h3><translate>老化层</translate></h3>
+		<div class="row flex-row">
+			<div class="col-md-3">
+				<label for="SupportLayerNumber">
+					<translate>层数</translate>
+				</label>
+				<input class="form-control" value="{{profile.SupportLayerNumber}}" name="SupportLayerNumber" id="SupportLayerNumber" type="number"
+				    required>
+			</div>
+			<div class="col-md-3">
+				<label for="SupportDepth">
+					<translate>层高</translate>
+					<span class="label label-default">μm</span></label>
+				<input class="form-control" value="{{profile.SupportDepth}}" name="SupportDepth" id="SupportDepth" step="0.001" type="number"
+				    required>
+			</div>
+			<div class="col-md-3">
+				<label for="SupportCureTime">
+					<translate>固化时间</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.SupportCureTime}}" name="SupportCureTime" id="SupportCureTime" step="0.0001"
+				    type="number" required>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="SupportWaitBeforePrint">
+					<translate>固化前等待</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.SupportWaitBeforePrint}}" name="SupportWaitBeforePrint" step="0.01" id="SupportWaitBeforePrint"
+				    type="number" required>
+				<br>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="SupportWaitAfterPrint">
+					<translate>固化后等待</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.SupportWaitAfterPrint}}" name="SupportWaitAfterPrint" step="0.01" id="SupportWaitAfterPrint"
+				    type="number" required>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="SupportWaitHeight">
+					<translate>固化前提升</translate>
+					<span class="label label-default" translate>mm</span></label>
+				<input class="form-control" value="{{profile.SupportWaitHeight}}" name="SupportWaitHeight" step="0.001" id="SupportWaitHeight"
+				    type="number" required>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="SupportTopWait">
+					<translate>固化后提升</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.SupportTopWait}}" name="SupportTopWait" step="0.01" id="SupportTopWait" type="number"
+				    required>
+			</div>
+		</div>
+		<br>
+
+		<h3>
+		<translate>普通层</translate></h3>
+		<div class="row flex-row">
+			<div class="col-md-3">
+				<label for="Depth">
+					<translate>层高</translate>
+					<span class="label label-default" translate>μm</span></label>
+				<input class="form-control" value="{{profile.Depth}}" name="Depth" id="Depth" step="0.001" type="number" required>
+			</div>
+			<div class="col-md-3">
+				<label for="CureTime">
+					<translate>固化时间</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.CureTime}}" name="CureTime" id="CureTime" step="0.0001" type="number" required>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="WaitBeforePrint">
+					<translate>固化前等待</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.WaitBeforePrint}}" name="WaitBeforePrint" id="WaitBeforePrint" step="0.01" type="number"
+				    required>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="WaitAfterPrint">
+					<translate>固化后等待</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.WaitAfterPrint}}" name="WaitAfterPrint" id="WaitAfterPrint" step="0.01" type="number"
+				    required>
+				<br>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="WaitHeight">
+					<translate>固化前提升</translate>
+					<span class="label label-default">mm</span></label>
+				<input class="form-control" value="{{profile.WaitHeight}}" name="WaitHeight" id="WaitHeight" step="0.001" type="number" required>
+			</div>
+			<div class="col-md-3 conditional" data-condition="#SetupMode == 0">
+				<label for="TopWait">
+					<translate>固化后提升</translate>
+					<span class="label label-default" translate>s</span>
+				</label>
+				<input class="form-control" value="{{profile.TopWait}}" name="TopWait" id="TopWait" step="0.01" type="number" required>
+			</div>
+		</div>
+		<br>
+
+		<input type="hidden" id="SetupMode" value="{{config.SetupMode}}">
+		<div class="conditional" data-condition="#SetupMode == 0">
+			<h3 translate>动态计算</h3>
+			<div class="row flex-row">
+				<div class="col-md-3">
+					<label for="DynamicCureTime">
+						<translate>固化时间</translate>
+						<span class="label label-default" translate>s</span>{{helpModal("dynamic-guide,vars,math,gcode")}} {{formulaModal()}}</label>
+					<textarea class="form-control" name="DynamicCureTime" id="DynamicCureTime">{{profile.DynamicCureTime}}</textarea>
+				</div>
+				<div class="col-md-3">
+					<label for="DynamicSpeed">
+						<translate>速度</translate>
+						<span class="label label-default" translate>μm/s</span>{{helpModal("dynamic-guide,vars,math,gcode")}} {{formulaModal()}}</label>
+					<textarea class="form-control" name="DynamicSpeed" id="DynamicSpeed">{{profile.DynamicSpeed}}</textarea>
+				</div>
+				<div class="col-md-3">
+					<label for="DynamicLift">
+						<translate>高度</translate>
+						<span class="label label-default" translate>mm</span>{{helpModal("dynamic-guide,vars,math,gcode")}} {{formulaModal()}}</label>
+					<textarea class="form-control" name="DynamicLift" id="DynamicLift">{{profile.DynamicLift}}</textarea>
+				</div>
+				<div class="col-md-3">
+					<label for="DynamicWaitAfterLift">
+						<translate>提升后等待</translate>
+						<span class="label label-default" translate>s</span>{{helpModal("dynamic-guide,vars,math,gcode")}} {{formulaModal()}}</label>
+					<textarea class="form-control" name="DynamicWaitAfterLift" id="DynamicWaitAfterLift">{{profile.DynamicWaitAfterLift}}</textarea>
+				</div>
+			</div>
+			<br>
+		</div>
+		<input type="hidden" id="PrinterType" value="{{config.PrinterType}}">	
+		<div class="conditional" data-condition="#SetupMode == 0">
+		    <h3 translate>配置代码</h3>
+		    <div class="row flex-row ">
+			    <div class="col-md-6">
+				    <input type="hidden" name="SyscallBeforeLayer" id="SyscallBeforeLayer" value="{{profile.SyscallBeforeLayer}}">
+				    <label for="ShieldBeforeLayer">
+					    <translate>每层前代码</translate>{{helpModal("vars,math,gcode")}} {{formulaModal()}}</label>
+				    <textarea class="form-control" name="ShieldBeforeLayer" id="ShieldBeforeLayer">{{profile.ShieldBeforeLayer}}</textarea>
+				    <br>
+		    	</div>
+			    <div class="col-md-6">
+				    <input name="SyscallAfterLayer" id="SyscallAfterLayer" value="{{profile.SyscallAfterLayer}}" type="hidden">
+				    <label for="ShieldAfterLayer">
+				    	<translate>每层后代码</translate>{{helpModal("vars,math,gcode")}} {{formulaModal()}}</label>
+				    <textarea class="form-control" name="ShieldAfterLayer" id="ShieldAfterLayer">{{profile.ShieldAfterLayer}}</textarea>
+			    </div>
+			</div>
+		</div>
+		<br>
+
+		<div class="conditional" data-condition="#SetupMode == 0">
+			<h3 translate>重写机器参数</h3>
+			<div class="row flex-row">
+				<div class="col-md-4">
+					<label for="XYRes">
+						<translate>重写X和Y像素</translate>
+						<span class="label label-default" translate>微米</span></label>
+					<input class="form-control" value="{{profile.XYRes}}" name="XYRes" id="XYRes" step="0.001" type="number">
+					<br>
+				</div>
+				<div class="col-md-4">
+					<label for="YRes">
+						<translate>X/Y百分比修改</translate>
+						<span class="label label-default" translate>百分比</span></label>
+					<input class="form-control" value="{{profile.YRes}}" name="YRes" id="YRes" step="0.001" type="number">
+					<input value="{{profile.XYResPerc}}" name="XYResPerc" id="XYResPerc" step="0.001" type="hidden">
+				</div>
+				<div class="col-md-4">
+					<label for="ZResPerc">
+						<translate>模型高度修改</translate>
+						<span class="label label-default" translate>百分比</span></label>
+					<input class="form-control" value="{{profile.ZResPerc}}" name="ZResPerc" id="ZResPerc" step="0.001" type="number">
+				</div>
+			
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-success"  data-condition="#SetupMode >= 0" translate>确定</button>
+	</form>
+	<br>
+	<br>
+</div>
+{% endblock %}
